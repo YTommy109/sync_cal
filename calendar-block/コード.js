@@ -12,28 +12,6 @@ const blockItems = [{
 }]
 
 /**
- * 一週間分のイベントを同期する
- */
-function updateOneWeek() {
-  const fromDateTime = new Date()
-  const toDateTime = new Date()
-  toDateTime.setDate(fromDateTime.getDate() + 5)
-
-  libUpdateCalendar(fromDateTime, toDateTime)
-}
-
-/**
- * 三ヶ月分のイベントを同期する
- */
-function updateThreeMonthes() {
-  const fromDateTime = new Date()
-  const toDateTime = new Date()
-  toDateTime.setDate(fromDateTime.getDate() + 90)
-
-  libUpdateCalendar(fromDateTime, toDateTime)
-}
-
-/**
  * 一ヶ月分のイベントを同期する
  */
 function updateOneMonth() {

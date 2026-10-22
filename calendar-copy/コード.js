@@ -9,28 +9,6 @@ const sourceCalendarID = requiredProperty('SOURCE_CALENDAR_ID');
 const targetCalendarID = requiredProperty('TARGET_CALENDAR_ID')
 
 /**
- * 一週間分のイベントを同期する
- */
-function updateOneWeek() {
-  const fromDateTime = new Date();
-  const toDateTime = new Date();
-  toDateTime.setDate(fromDateTime.getDate() + 7);
-
-  libUpdateCalendar(fromDateTime, toDateTime)
-}
-
-/**
- * 三ヶ月分のイベントを同期する
- */
-function updateThreeMonthes() {
-  const fromDateTime = new Date();
-  const toDateTime = new Date();
-  toDateTime.setDate(fromDateTime.getDate() + 90);
-
-  libUpdateCalendar(fromDateTime, toDateTime)
-}
-
-/**
  * 一ヶ月分のイベントを同期する
  */
 function updateOneMonth() {
