@@ -56,9 +56,42 @@ calendar-copy は「用事あり」を除いて複製するので、同期用カ
 
 ## 開発
 
-各ディレクトリで [clasp](https://github.com/google/clasp) を使う。
+各ディレクトリで [clasp](https://github.com/google/clasp) を使い、Apps Script のプロジェクトとコードをやり取りする。
+
+### 準備
+
+1. `npm install -g @google/clasp` で clasp をインストールする。
+   Homebrew の clingo に含まれる `clasp` は、同じ名前の別のコマンド（解集合プログラミングのソルバー）である。
+   PATH でそちらが先に見つかると、`clasp login` が `Can not read from 'login'` で失敗する。
+   `which -a clasp` で確かめ、ぶつかる場合は `npx @google/clasp` で呼ぶ。
+2. 配置先のアカウントで <https://script.google.com/home/usersettings> を開き、「Google Apps Script API」をオンにする。
+3. `clasp login` でログインする。
+
+### `.clasp.json` を作る
+
+`.clasp.json` は、push する先のプロジェクトを指定するファイルである。
+プロジェクトはアカウントごとに異なるので、リポジトリには含めない（`.gitignore` で除外している）。
+`calendar-copy/` と `calendar-block/` のそれぞれに、次の内容で作る。
+
+```json
+{
+  "scriptId": "<スクリプト ID>",
+  "rootDir": ""
+}
+```
+
+スクリプト ID は、Web エディタの「プロジェクトの設定 → ID」か、`clasp list-scripts` の URL で確認する。
+プロジェクトがまだなければ、Web エディタで新しく作ってから ID を控える。
+
+複数のアカウントで使うときは、`clasp login --user <名前>` でアカウントごとにログインする。
+以降のコマンドにも、同じ `--user <名前>` を付ける。
+
+### 反映する
 
 ```sh
-clasp pull   # Web エディタの変更を取り込む
+clasp pull   # Web エディタの変更を取り込む（ローカルのファイルが上書きされるので git diff で確かめる）
 clasp push   # リモートを上書きする（先に pull して差分が無いか確かめる）
 ```
+
+push の前に、[スクリプト プロパティ](#スクリプト-プロパティ)を登録しておく。
+未登録のまま push すると、次のトリガー実行から失敗する。
